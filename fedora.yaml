@@ -22,38 +22,10 @@ packages:
 
 # Fedora specific packages for each variant
 conditional-include:
-  - if: variant == "silverblue"
-    include:
-      packages:
-        - fedora-release-silverblue
-        - desktop-backgrounds-gnome
-        - gnome-shell-extension-background-logo
-  - if: variant == "kinoite"
-    include:
-      packages:
-        - fedora-release-kinoite
-        # Explicitely not included via comps
-        # See: https://pagure.io/fedora-kde/SIG/issue/295
-        - plasma-welcome-fedora
-  - if: variant == "kinoite-mobile"
-    include:
-      packages:
-        - fedora-release-kinoite
-        # Explicitely not included via comps
-        # See: https://pagure.io/fedora-kde/SIG/issue/295
-        - plasma-welcome-fedora
   - if: variant == "sway-atomic"
     include:
       packages:
         - fedora-release-sway-atomic
-  - if: variant == "budgie-atomic"
-    include:
-      packages:
-        - fedora-release-budgie-atomic
-  - if: variant == "cosmic-atomic"
-    include:
-      packages:
-        - fedora-release-cosmic-atomic
   - if: variant == "base-atomic"
     include:
       packages:

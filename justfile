@@ -13,32 +13,14 @@ force_nocache := "true"
 
 # Just doesn't have a native dict type, but quoted bash dictionary works fine
 pretty_names := '(
-    [silverblue]="Silverblue"
-    [kinoite]="Kinoite"
-    [kinoite-nightly]="Kinoite"
-    [kinoite-beta]="Kinoite"
-    [kinoite-mobile]="Kinoite"
     [sway-atomic]="Sway Atomic"
-    [budgie-atomic]="Budgie Atomic"
-    [xfce-atomic]="XFCE Atomic"
-    [lxqt-atomic]="LXQt Atomic"
     [base-atomic]="Base Atomic"
-    [cosmic-atomic]="COSMIC Atomic"
 )'
 
 # subset of the map from https://pagure.io/pungi-fedora/blob/main/f/general.conf
 volume_id_substitutions := '(
-    [silverblue]="SB"
-    [kinoite]="Kin"
-    [kinoite-nightly]="Kin"
-    [kinoite-beta]="Kin"
-    [kinoite-mobile]="Kin"
     [sway-atomic]="SwA"
-    [budgie-atomic]="BdA"
-    [xfce-atomic]="XfA"
-    [lxqt-atomic]="LxA"
     [base-atomic]="BsA"
-    [cosmic-atomic]="CSMCA"
 )'
 
 # Define a retry function for use in recipes
@@ -520,15 +502,6 @@ multi-arch-manifest variant=default_variant:
 
     # Sign manifest
     retry 5 60 cosign sign -y --key private.key ${image}:${version}
-
-    if [[ "${variant}" == "kinoite-nightly" ]]; then
-        # Update latest tag for kinoite-nightly only
-        buildah manifest push \
-            "${image}:${version}.${buildid}" \
-            "docker://${image}:latest"
-        # Sign manifest
-        cosign sign -y --key private.key ${image}:latest
-    fi
 
     # Cleanup private key
     rm private.key.b64 private.key

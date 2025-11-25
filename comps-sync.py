@@ -196,11 +196,6 @@ def main():
 
     # List of comps groups used for each variant
     variant_comps_groups = {
-        "budgie-atomic": ["budgie-desktop", "budgie-desktop-apps", "base-x"],
-        "cosmic-atomic": ["cosmic-desktop", "cosmic-desktop-apps", "base-graphical"],
-        "kinoite": ["kde-desktop", "base-graphical"],
-        "kinoite-mobile": ["kde-mobile", "kde-mobile-apps", "base-graphical"],
-        "silverblue": ["gnome-desktop", "base-graphical"],
         "sway-atomic": ["swaywm", "swaywm-extended", "base-graphical"],
     }
 

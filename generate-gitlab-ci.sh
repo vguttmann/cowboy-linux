@@ -7,13 +7,7 @@ set -euo pipefail
 # set -x
 
 variants=(
-    'silverblue'
-    'kinoite'
-    'kinoite-mobile'
     'sway-atomic'
-    'budgie-atomic'
-    'base-atomic'
-    'cosmic-atomic'
 )
 
 branch="$(git rev-parse --abbrev-ref HEAD)"
