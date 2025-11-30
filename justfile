@@ -433,15 +433,8 @@ upload-container variant=default_variant arch=default_arch:
         "oci-archive:${variant}.ociarchive" \
         "docker://${image}:${version}.${buildid}${suffix}"
 
-    # Decode private key
-    printenv "COSIGN_PRIVATE_KEY" > private.key.b64
-    base64 --decode private.key.b64 > private.key
-
     # Sign images recursively
-    retry 5 60 cosign sign -y --key private.key ${image}:${version}.${buildid}${suffix}
-
-    # Cleanup private key
-    rm private.key.b64 private.key
+    retry 5 60 cosign sign -y ${image}:${version}.${buildid}${suffix}
 
 # Create a multi-arch manifest for a given variant, push it to a registry and sign it
 multi-arch-manifest variant=default_variant:
@@ -501,17 +494,13 @@ multi-arch-manifest variant=default_variant:
             "${image}:${version}.${buildid}-x86_64" \
             "${image}:${version}.${buildid}-aarch64"
 
-    # Decode private key
-    printenv "COSIGN_PRIVATE_KEY" > private.key.b64
-    base64 --decode private.key.b64 > private.key
-
     # Push fully versioned dual arch manifest tag (major version, build date/id)
     retry 5 60 buildah manifest push \
         "${image}:${version}.${buildid}" \
         "docker://${image}:${version}.${buildid}"
 
     # Sign manifest
-    retry 5 60 cosign sign -y --key private.key ${image}:${version}.${buildid}
+    retry 5 60 cosign sign -y ${image}:${version}.${buildid}
 
     # Update "un-versioned" tag (only major version)
     retry 5 60 buildah manifest push \
@@ -519,7 +508,7 @@ multi-arch-manifest variant=default_variant:
         "docker://${image}:${version}"
 
     # Sign manifest
-    retry 5 60 cosign sign -y --key private.key ${image}:${version}
+    retry 5 60 cosign sign -y ${image}:${version}
 
     if [[ "${variant}" == "kinoite-nightly" ]]; then
         # Update latest tag for kinoite-nightly only
@@ -527,8 +516,5 @@ multi-arch-manifest variant=default_variant:
             "${image}:${version}.${buildid}" \
             "docker://${image}:latest"
         # Sign manifest
-        cosign sign -y --key private.key ${image}:latest
+        cosign sign -y ${image}:latest
     fi
-
-    # Cleanup private key
-    rm private.key.b64 private.key
