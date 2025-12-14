@@ -6,6 +6,7 @@
       ./hardware-configuration.nix
       ./locale.nix
       ./hyprland.nix
+      ./fish.nix
       inputs.home-manager.nixosModules.home-manager
     ];
 
