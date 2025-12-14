@@ -34,9 +34,6 @@
 
 
   programs = {
-    git = {
-      enable = true;
-    };
     ssh = {
       startAgent = true;
     };
