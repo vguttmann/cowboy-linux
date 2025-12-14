@@ -32,8 +32,13 @@
   };
 
 
-  programs.git = {
-    enable = true;
+  programs = {
+    git = {
+      enable = true;
+    };
+    ssh = {
+      startAgent = true;
+    };
   };
 
   security.rtkit.enable = true;
