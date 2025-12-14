@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ inputs, config, pkgs, ... }:
 
 {
   imports =
@@ -6,6 +6,7 @@
       ./hardware-configuration.nix
       ./locale.nix
       ./hyprland.nix
+      inputs.home-manager.nixosModules.home-manager
     ];
 
   # Bootloader.
@@ -22,6 +23,14 @@
   };
 
   networking.networkmanager.enable = true;
+
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    users = {
+      ranger = import ./home.nix;
+    };
+  };
+
 
   programs.git = {
     enable = true;
@@ -71,6 +80,7 @@
     kitty
     libfido2
     tmux
+    home-manager
   ];
 
   system.stateVersion = "25.11"; # Did you read the comment?
