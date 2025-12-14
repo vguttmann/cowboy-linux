@@ -5,6 +5,7 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./locale.nix
+      ./hyprland.nix
     ];
 
   # Bootloader.
@@ -22,30 +23,14 @@
 
   networking.networkmanager.enable = true;
 
-  programs = {
-    git = {
-      enable = true;
-    };
-    hyprland = {
-      enable = true;
-      xwayland.enable = true;
-    };
+  programs.git = {
+    enable = true;
   };
 
   security.rtkit.enable = true;
   services = {
     openssh = {
       enable = true;
-    };
-    displayManager = {
-      sddm = {
-        enable = true;
-        wayland.enable = true;
-      };
-      autoLogin = {
-        enable = true;
-        user = "ranger";
-      };
     };
     pipewire = {
       enable = true;
@@ -79,6 +64,8 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  # Allow nix flakes
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   environment.systemPackages = with pkgs; [
     kitty
